@@ -1,10 +1,10 @@
 import { Inter } from "next/font/google";
 
+import HomePage from './HomePage'
 
 import "./globals.css";
 
-import Header from "@/components/Header";
-import ImageDiary from "@/components/ImageDiary";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,10 +18,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <h2 className="font-bold m-6 text-[1.2em]"
-        >A nasa dispoem de sua informações, e nos mastigamos para vc</h2>
-        <ImageDiary />
+
+        <HomePage />
+        
         {children}
         </body>
     </html>

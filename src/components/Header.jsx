@@ -8,8 +8,8 @@ export default function Header () {
             <header
              className="w-full h-32 flex
               items-center justify-around
-              bg-[#673364] 
-             
+              bg-[#7f047f] 
+             font-[helvetica]
              "
              >
                 <Image 

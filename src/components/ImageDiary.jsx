@@ -5,7 +5,11 @@ import axios from "axios";
 import Image from "next/image";
 
 export default function ImageDiary() {
-  const [dataList, setDataList] = useState(null);
+  const [dataList, setDataList] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedDescription, setSelectedDescription] = useState(null);
+
 
   useEffect(() => {
     axios
@@ -13,29 +17,64 @@ export default function ImageDiary() {
       .then((result) => {
         const data = result.data;
         console.log(data);
-
-        // Se a API retorna um único objeto, coloque-o dentro de um array
-        setDataList([data]); // Colocamos o objeto em um array para que `map` funcione
+        setDataList([data]); 
       })
       .catch((err) => {
         console.error(err);
       });
   }, []);
 
+  const openModal = (image, description) => {
+    setSelectedImage(image);
+    setSelectedDescription(description);
+    setIsModalOpen(true);
+    
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedImage(null);
+    setSelectedDescription(null);
+
+  };
+
   return (
     <>
-      {Array.isArray(dataList) && dataList.length > 0 ? (
-        dataList.map((data, index) => (
-          <Image 
-            key={index}
-            src={data.url} // Certifique-se de que `data.url` contém a URL da imagem
-            alt={data.title} // Use um campo relevante para a descrição da imagem
-            width={500} // Defina a largura conforme necessário
-            height={500} // Defina a altura conforme necessário
-          />
-        ))
-      ) : (
-        <p>No data available</p>
+      {dataList.map((data, index) => (
+        <div key={index} className="flex-1 items-center text-center font-[helvetica]">
+          <button onClick={() => openModal(data.hdurl,data.explanation)}>
+            <Image 
+              src={data.url}
+              alt="Diary image"
+              width={350}
+              height={300}
+            />
+          </button>
+          <p>{data.title}</p>
+        </div>
+      ))}
+
+      {isModalOpen && selectedImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70">
+          <div className="relative bg-[#2e3033f0] p-2 rounded">
+            <button
+              onClick={closeModal}
+              className="absolute top-[3px] right-2 m-2 text-white text-shadow z-51"
+            >
+              X
+            </button>
+            <Image
+              src={selectedImage}
+              alt="Image"
+              width={460}
+              height={250}
+            />
+            <p
+             className="text-[10px] gap-7 absolute bottom-4 font-bold text-[#ffffff96] opacity-0 transition-opacity hover:opacity-[100%] m-2 text-shadow"
+            >{selectedDescription}</p>
+
+          </div>
+        </div>
       )}
     </>
   );
