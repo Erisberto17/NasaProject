@@ -1,40 +1,47 @@
 /* eslint-disable react/no-unescaped-entities */
 import Header from "@/components/Header";
-import ImageDiary from "@/components/ImageDiary";
 import Footer from "@/components/Footer";
+import ImageDiary from "@/components/ImageDiary";
+import Image from "next/image";
 
+import universo from '@/assets/universo.png'
+import telescopio from '@/assets/Telescopio.png'
 
 export default function HomePage () {
 
 
     return (
 
-        <>
+        < body className=" max-w-[100%]">
         
         <Header />
     
         
-        <div className="font-[helvetica]">
+        <div className="font-[helvetica] flex items-center relative top-9">
 
-            <h1 className="font-bold m-6 text-[1.7em]">
-                A nasa dispoem de sua informações, e nós mastigamos para você</h1>
-            <div className="flex justify-between items-center gap-20"> 
-                <div className="text-5 max-w-[450px] m-10">
-
-                    <p >
-                    (National Aeronautics and Space Administration — NASA) é uma agência do governo federal dos Estados Unidos responsável 
-                    pela pesquisa e desenvolvimento de tecnologias e programas de exploração espacial. Sua missão oficial é
-                    "fomentar o futuro na pesquisa, descoberta e exploração espacial". A NASA foi criada em 29 de julho de 1958, substituindo seu antecessor
-                    </p>
-                </div>
-                <ImageDiary  />
-
-            </div>
+            <Image 
+                src={universo}
+                alt="Universe"
+                width={500}
+                height={500}
+                className="relative bottom-6"
+            />
+            <h1 className=" font-medium font-poppins text-center  text-[37px] m-0
+                relative bottom-10 right-10
+            ">
+                    A nasa dispoem de suas informações, e nós mastigamos para você</h1> 
+            <Image className=" relative right-10 top-40"
+                src={telescopio}
+                alt="Universe"
+                width={520}
+                height={520}
+            />
         </div>
+        <ImageDiary />
                 <Footer />
 
 
-        </>
+        </ body>
     
 );
 };

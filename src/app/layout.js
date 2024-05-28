@@ -4,6 +4,9 @@ import HomePage from './HomePage'
 
 import "./globals.css";
 
+import { Poppins } from "next/font/google";
+
+import { Nunito } from "next/font/google";
 
 
 

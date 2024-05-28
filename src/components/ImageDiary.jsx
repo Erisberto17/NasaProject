@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 import axios from "axios";
 import Image from "next/image";
+import ReactPlayer from "react-player";
 
 export default function ImageDiary() {
   const [dataList, setDataList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedDescription, setSelectedDescription] = useState(null);
+  const [selectedData, setSelectedData] = useState(null);
+
 
 
   useEffect(() => {
@@ -24,10 +27,12 @@ export default function ImageDiary() {
       });
   }, []);
 
-  const openModal = (image, description) => {
+  const openModal = (image, description, data) => {
     setSelectedImage(image);
     setSelectedDescription(description);
     setIsModalOpen(true);
+    setSelectedData(data);
+
     
   };
 
@@ -35,22 +40,37 @@ export default function ImageDiary() {
     setIsModalOpen(false);
     setSelectedImage(null);
     setSelectedDescription(null);
+    setSelectedData(null);
 
   };
 
   return (
     <>
       {dataList.map((data, index) => (
-        <div key={index} className="flex-1 items-center text-center font-[helvetica]">
-          <button onClick={() => openModal(data.hdurl,data.explanation)}>
-            <Image 
-              src={data.url}
-              alt="Diary image"
-              width={350}
-              height={300}
-            />
+        <div key={index} className="flex-1 items-center text-center font-[helvetica] mb-10 mt-16">
+          <button onClick={() => openModal(data.hdurl,data.explanation, data.date)}>
+            <p className="text-[40px] font-poppins font-meddium mb-5">Imagem do Dia</p>
+            <p className="text-[25px] font-nunito">{data.title}</p>
+            <div className='flex m-5'>
+            {data.media_type == 'video' ? (
+              
+                <ReactPlayer playing={true} controls={false} loop={true} light={true} url={data.url}/>
+
+            ) : data.media_type == 'image'(
+              
+              <Image 
+                src={data.url}
+                alt="Diary image"
+                width={550}
+                height={500}
+                className=" ml-5 "
+              />
+            )}
+              <p
+              className=" font-nunito text-[13px] max-w-[300px]"
+              >{data.explanation}</p>
+            </div>
           </button>
-          <p>{data.title}</p>
         </div>
       ))}
 
@@ -72,6 +92,7 @@ export default function ImageDiary() {
             <p
              className="text-[10px] gap-7 absolute bottom-4 font-bold text-[#ffffff96] opacity-0 transition-opacity hover:opacity-[100%] m-2 text-shadow"
             >{selectedDescription}</p>
+            <p className="text-[#abababe6] font-[helvetica]">Foto tirada em: {selectedData}</p>
 
           </div>
         </div>
