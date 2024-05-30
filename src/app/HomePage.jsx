@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import ImageDiary from "@/components/ImageDiary";
 import Image from "next/image";
 
-import universo from '@/assets/universo.png'
+import universo from '@/assets/Universo.png'
 import telescopio from '@/assets/Telescopio.png'
 
 export default function HomePage () {
